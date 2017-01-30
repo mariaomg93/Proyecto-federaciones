@@ -2,6 +2,7 @@ package deportes.modelo.entidades;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,7 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -22,6 +24,17 @@ public class Equipo {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	
+	private String imagen;
+	
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
 	@NotNull
 	@NotEmpty
 	private String nombre;
@@ -33,10 +46,12 @@ public class Equipo {
 	private Integer presupuesto;
 
 	@ManyToOne (fetch = FetchType.EAGER)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "fede", nullable = false)
 	private Federacion fede;
 	
 	@OneToMany(fetch = FetchType.EAGER)
+	
 	private Set<Jugador> jugadores;
 
 	public Long getId() {
@@ -94,6 +109,7 @@ public class Equipo {
 		result = prime * result + ((estadio == null) ? 0 : estadio.hashCode());
 		result = prime * result + ((fede == null) ? 0 : fede.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((imagen == null) ? 0 : imagen.hashCode());
 		result = prime * result + ((jugadores == null) ? 0 : jugadores.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((presupuesto == null) ? 0 : presupuesto.hashCode());
@@ -123,6 +139,11 @@ public class Equipo {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (imagen == null) {
+			if (other.imagen != null)
+				return false;
+		} else if (!imagen.equals(other.imagen))
 			return false;
 		if (jugadores == null) {
 			if (other.jugadores != null)

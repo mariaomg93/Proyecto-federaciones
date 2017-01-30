@@ -11,13 +11,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import deportes.modelo.entidades.Equipo;
 import deportes.modelo.entidades.Federacion;
+
+import deportes.modelo.repositorios.RepositorioEquipo;
 import deportes.modelo.repositorios.RepositorioFederacion;
 
 @Controller
 @RequestMapping("/federaciones")
 public class ControllerFede {
+	
+	
+	@Autowired
+	private RepositorioEquipo repoeq;
+	
 	
 	@Autowired
 	private RepositorioFederacion repofe;
@@ -33,6 +42,22 @@ public class ControllerFede {
 		model.addAttribute("federaciones", repofe.findAll());
 		return "pages/federacion";
 	}
+	
+	
+	
+	
+	@RequestMapping(value="/federacion/{id}",method = RequestMethod.GET)
+	public String mostrarEquipos( Model model, @PathVariable Long id) {
+		Federacion fede = repofe.getOne(id);
+		Iterable<Equipo> equi = repoeq.findAllByFede(fede);
+		model.addAttribute("federac", repofe.findAll());
+		model.addAttribute("equipos",equi);
+		model.addAttribute("federacionUnica", repofe.findOne(id));
+		return "pages/equipo";
+	}
+	
+	
+	
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String aumentarfede(Model model,@Valid  @ModelAttribute Federacion fede){
@@ -52,6 +77,15 @@ public class ControllerFede {
 		catch(Exception ex){
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
+		
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/{id}")
+	@ResponseBody
+	public Federacion buscarFede(@PathVariable Long id){
+		
+		Federacion fede=repofe.findOne(id);
+		return fede;
 		
 	}
 	

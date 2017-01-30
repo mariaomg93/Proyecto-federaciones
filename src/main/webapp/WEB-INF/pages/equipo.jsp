@@ -7,12 +7,31 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script type="text/javascript" src="<c:url value="/static/js/equipo.js"/>"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Equipo</title>
 </head>
 <body>
-	<h3 class=text-center>Equipos</h3>
-	
+
+<c:if test="${not empty federacionUnica}">
+<h3 class="text-center">
+	${federacionUnica.nombre}
+</h3><br><br>
+<div class="container">
+<div class="row">
+<div class="media">
+	<a class="pull-left" href="#">
+		<img class="media-object" src="${federacionUnica.imagen}" alt="Image" width="240" height="240">
+	</a>
+	<div class="media-body">
+		<h4 class="media-heading">${federacionUnica.nombre}</h4>
+		<p>${federacionUnica.pais}</p>
+	</div>
+</div>
+</div>
+</div>
+</c:if>
+
 	<table class="table table-hover">
 	<thead>
 		<tr>
@@ -22,6 +41,7 @@
 			<th>Presupuesto</th>
 			<th>Federación</th>
 			<th>País</th>
+			<th>Ver jugadores</th>
 			<th>Editar</th>
 			<th>Borrar</th>
 		</tr>
@@ -33,9 +53,10 @@
 			<td>${equipo.nombre}</td>
 			<td>${equipo.estadio}</td>
 			<td>${equipo.presupuesto}</td>
-			<td>${equipo.fede.nombre}</td>
+			<td><a href="<c:url value="/federaciones/federacion/${equipo.fede.id}" /> ">${equipo.fede.nombre}</a></td>
 			<td>${equipo.fede.pais}</td>
-			<td><a id="editar-equipo" class="btn btn-warning">Editar</a></td>
+			<td><a href="<c:url value="/equipos/equipo/${equipo.id}"/>">Ver</a></td>
+			<td><a class="editar-equipo btn btn-warning">Editar</a></td>
 			<td><a data-id="${equipo.id }" class="btn btn-danger open-Modal" data-nombre="${equipo.nombre}" data-toggle="modal" href="#modal-borrar">Borrar</a></td>
 		</tr>
 
@@ -54,7 +75,9 @@
 				<h4 class="modal-title">Añadir equipo</h4>
 			</div>
 			<div class="modal-body">
-				<form  method="POST" role="form">
+			
+			
+				<form  action="<c:url value="/equipos"/>" method="POST" role="form">
 	<legend>Equipo</legend>
 <div class="form-group">
 		<label for="Nombre">Nombre</label>
@@ -70,6 +93,11 @@
 		<label for="Presupuesto">Presupuesto</label>
 		<input type="number" class="form-control" id="presupuesto-equipo" placeholder="Presupuesto" name="presupuesto">
 	</div>
+	
+	<div class="form-group">
+		<label for="imagen">imagen</label>
+		<input type="url" class="form-control" id="imagen-equipo" placeholder="imagen" name="imagen">
+	</div>
 
 
 
@@ -78,7 +106,7 @@
 
 		<div class="form-group">
 		<label for="Federacion">Federacion</label>
-		<select name="fede" id="input" class="form-control">
+		<select name="fede" id="federacion-equipo" class="form-control">
 
 			<c:forEach items="${federac}" var="fede"> 
 

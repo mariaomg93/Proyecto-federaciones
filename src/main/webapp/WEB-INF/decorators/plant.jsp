@@ -5,6 +5,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
  <head>
+
+<link rel="shortcut icon" href="<c:url value="/static/img/favicon.ico" />" type="image/x-icon">
+<link rel="icon" href="<c:url value="/static/img/favicon.ico" />" type="image/x-icon">
+
+
  <title><sitemesh:write property='title'/></title>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
  <!-- Latest compiled and minified CSS -->
@@ -17,6 +22,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="<c:url value="/static/css/style.css" />" rel="stylesheet">
  <sitemesh:write property='head'/>
+ 
+ 
+ 
 
  </head>
  
@@ -29,13 +37,13 @@
 				<a href="/sensei">Home</a>
 			</li>
 			<li>
-				<a href="federaciones">Federaciones</a>
+				<a href="<c:url value="/federaciones"/>">Federaciones</a>
 			</li>
 			<li>
-				<a href="equipos">Equipos</a>
+				<a href="<c:url value="/equipos"/>">Equipos</a>
 			</li>
 			<li>
-				<a href="jugadores">Jugadores</a>
+				<a href="<c:url value="/jugadores"/>">Jugadores</a>
 			</li>
 		</ul>
 	</div>

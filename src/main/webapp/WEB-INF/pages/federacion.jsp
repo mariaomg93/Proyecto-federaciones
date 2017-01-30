@@ -21,6 +21,7 @@
 			<th>ID</th>
 			<th>Nombre</th>
 			<th>País</th>
+			<th>Ver equipos</th>
 			<th>Editar</th>
 			<th>Borrar</th>
 		</tr>
@@ -31,7 +32,8 @@
 			<td >${federacion.id}</td>
 			<td>${federacion.nombre}</td>
 			<td>${federacion.pais}</td>
-			<td><a id="editar-fede" class="btn btn-warning">Editar</a></td>
+			<td><a href="<c:url value="/federaciones/federacion/${federacion.id}"/>">Ver</a></td>
+			<td><a class="editar-fede btn btn-warning">Editar</a></td>
 			<td><a data-id="${federacion.id }" class="btn btn-danger open-Modal" data-nombre="${federacion.nombre}" data-toggle="modal" href="#modal-borrar">Borrar</a></td>
 
 		</tr>
@@ -50,7 +52,12 @@
 				<h4 class="modal-title">Añadir federacion</h4>
 			</div>
 			<div class="modal-body">
-				<form  method="POST" role="form">
+			
+			
+			
+			
+			
+				<form action="<c:url value="/federaciones"/>" method="POST" role="form">
 	<legend>Federación</legend>
 
 	<div class="form-group">
@@ -60,6 +67,11 @@
 	<div class="form-group">
 		<label for="">País</label>
 		<input type="text" class="form-control" id="pais-fede" placeholder="País" name="pais">
+	</div>
+	
+	<div class="form-group">
+		<label for="">Imagen</label>
+		<input type="url" class="form-control" id="imagen-fede" name="imagen">
 	</div>
 
 	<input type="hidden" id="id-fede" name="id">

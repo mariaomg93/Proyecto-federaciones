@@ -9,4 +9,6 @@ import deportes.modelo.entidades.Federacion;
 @Repository
 public interface RepositorioFederacion extends JpaRepository<Federacion, Long>{
 
+	
+
 }
